@@ -133,5 +133,10 @@ describe('createPagination', () => {
           .to.equal(false);
       });
     });
+
+    it('should return `lastPage` equals to total number of pages', () => {
+      expect(paginate5({ currentPage: 3, totalItemsCount: 62 }).lastPage)
+        .to.equal(7);
+    });
   });
 });

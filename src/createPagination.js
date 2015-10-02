@@ -55,13 +55,15 @@ export default function createPagination({ itemsPerPage, maxPagesInPagination })
     const showPrev = (currentPage > 1);
     const showNext = (currentPage < pagesCount);
     const showLast = (pages[pages.length - 1] < pagesCount);
+    const lastPage = pagesCount;
 
     return {
       showFirst,
       showPrev,
       pages,
       showNext,
-      showLast
+      showLast,
+      lastPage
     };
   };
 };

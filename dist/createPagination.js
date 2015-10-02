@@ -128,13 +128,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var showPrev = currentPage > 1;
 	    var showNext = currentPage < pagesCount;
 	    var showLast = pages[pages.length - 1] < pagesCount;
+	    var lastPage = pagesCount;
 
 	    return {
 	      showFirst: showFirst,
 	      showPrev: showPrev,
 	      pages: pages,
 	      showNext: showNext,
-	      showLast: showLast
+	      showLast: showLast,
+	      lastPage: lastPage
 	    };
 	  };
 	}

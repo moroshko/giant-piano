@@ -30,7 +30,8 @@ console.log(paginate({ currentPage: 5, totalItemsCount: 63 }));
      showPrev: true,
      pages: [3, 4, 5, 6, 7],
      showNext: true,
-     showLast: false
+     showLast: false,
+     lastPage: 7
    }
 */
 
@@ -40,7 +41,19 @@ console.log(paginate({ currentPage: 2, totalItemsCount: 34 }));
      showPrev: true,
      pages: [1, 2, 3, 4],
      showNext: true,
-     showLast: false
+     showLast: false,
+     lastPage: 4
+   }
+*/
+
+console.log(paginate({ currentPage: 1, totalItemsCount: 1234 }));
+/* {
+     showFirst: false,
+     showPrev: false,
+     pages: [1, 2, 3, 4, 5],
+     showNext: true,
+     showLast: true,
+     lastPage: 124
    }
 */
 ```
