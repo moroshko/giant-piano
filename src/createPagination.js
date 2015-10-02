@@ -1,32 +1,32 @@
 import isNatural from './isNatural';
 
-export default function createPagination({ itemsPerPage, maxPagesInPagination }) {
+export default function createPagination({ itemsPerPage, maxPages }) {
   if (!isNatural(itemsPerPage)) {
     throw new Error(`'itemsPerPage' must be a positive integer, not ${itemsPerPage}`);
     return;
   }
 
-  if (!isNatural(maxPagesInPagination)) {
-    throw new Error(`'maxPagesInPagination' must be a positive integer, not ${maxPagesInPagination}`);
+  if (!isNatural(maxPages)) {
+    throw new Error(`'maxPages' must be a positive integer, not ${maxPages}`);
     return;
   }
 
-  const half = (maxPagesInPagination - 1) / 2;
+  const half = (maxPages - 1) / 2;
   const smallerHalf = Math.floor(half);
   const largerHalf = Math.ceil(half);
 
-  return function paginate({ currentPage, totalItemsCount }) {
+  return function paginate({ currentPage, totalItems }) {
     if (!isNatural(currentPage)) {
       throw new Error(`'currentPage' must be a positive integer, not ${currentPage}`);
       return;
     }
 
-    if (!isNatural(totalItemsCount)) {
-      throw new Error(`'totalItemsCount' must be a positive integer, not ${totalItemsCount}`);
+    if (!isNatural(totalItems)) {
+      throw new Error(`'totalItems' must be a positive integer, not ${totalItems}`);
       return;
     }
 
-    const pagesCount = Math.ceil(totalItemsCount / itemsPerPage);
+    const pagesCount = Math.ceil(totalItems / itemsPerPage);
 
     if (currentPage > pagesCount) {
       throw new Error(`'currentPage' (${currentPage}) cannot be larger than pages count (${pagesCount})`);
@@ -38,12 +38,12 @@ export default function createPagination({ itemsPerPage, maxPagesInPagination })
     if (currentPage - smallerHalf <= 1) {
       minPage = 1;
     } else if (currentPage + largerHalf >= pagesCount) {
-      minPage = Math.max(1, pagesCount - maxPagesInPagination + 1);
+      minPage = Math.max(1, pagesCount - maxPages + 1);
     } else {
       minPage = currentPage - smallerHalf;
     }
 
-    const maxPage = Math.min(pagesCount, minPage + maxPagesInPagination - 1);
+    const maxPage = Math.min(pagesCount, minPage + maxPages - 1);
 
     let pages = [];
 

@@ -15,16 +15,16 @@ Then, in your app:
 var createPagination = require('giant-piano');
 
 /* 
-  `itemsPerPage` and `maxPagesInPagination` are normally static,
+  `itemsPerPage` and `maxPages` are normally static,
   so you should call `createPagination` only once.
 */
-var paginate = createPagination({ itemsPerPage: 10, maxPagesInPagination: 5 });
+var paginate = createPagination({ itemsPerPage: 10, maxPages: 5 });
 
 /*
   Then, call `paginate` with the current page number 
   and the total amount of items.
 */
-console.log(paginate({ currentPage: 5, totalItemsCount: 63 }));
+console.log(paginate({ currentPage: 5, totalItems: 63 }));
 /* {
      showFirst: true,
      showPrev: true,
@@ -35,7 +35,7 @@ console.log(paginate({ currentPage: 5, totalItemsCount: 63 }));
    }
 */
 
-console.log(paginate({ currentPage: 2, totalItemsCount: 34 }));
+console.log(paginate({ currentPage: 2, totalItems: 34 }));
 /* {
      showFirst: false,
      showPrev: true,
@@ -46,7 +46,7 @@ console.log(paginate({ currentPage: 2, totalItemsCount: 34 }));
    }
 */
 
-console.log(paginate({ currentPage: 1, totalItemsCount: 1234 }));
+console.log(paginate({ currentPage: 1, totalItems: 1234 }));
 /* {
      showFirst: false,
      showPrev: false,
@@ -56,6 +56,12 @@ console.log(paginate({ currentPage: 1, totalItemsCount: 1234 }));
      lastPage: 124
    }
 */
+```
+
+## Run demo locally
+
+```shell
+npm run demo
 ```
 
 ## License

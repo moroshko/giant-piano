@@ -1,3 +1,4 @@
+demo
 src
 tests
 .babelrc
@@ -5,4 +6,6 @@ tests
 .eslintrc
 .gitignore
 giant-piano.gif
-webpack.config.js
+server.js
+webpack.dist.config.js
+webpack.demo.config.js

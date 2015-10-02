@@ -69,37 +69,37 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function createPagination(_ref) {
 	  var itemsPerPage = _ref.itemsPerPage;
-	  var maxPagesInPagination = _ref.maxPagesInPagination;
+	  var maxPages = _ref.maxPages;
 
 	  if (!(0, _isNatural2['default'])(itemsPerPage)) {
 	    throw new Error('\'itemsPerPage\' must be a positive integer, not ' + itemsPerPage);
 	    return;
 	  }
 
-	  if (!(0, _isNatural2['default'])(maxPagesInPagination)) {
-	    throw new Error('\'maxPagesInPagination\' must be a positive integer, not ' + maxPagesInPagination);
+	  if (!(0, _isNatural2['default'])(maxPages)) {
+	    throw new Error('\'maxPages\' must be a positive integer, not ' + maxPages);
 	    return;
 	  }
 
-	  var half = (maxPagesInPagination - 1) / 2;
+	  var half = (maxPages - 1) / 2;
 	  var smallerHalf = Math.floor(half);
 	  var largerHalf = Math.ceil(half);
 
 	  return function paginate(_ref2) {
 	    var currentPage = _ref2.currentPage;
-	    var totalItemsCount = _ref2.totalItemsCount;
+	    var totalItems = _ref2.totalItems;
 
 	    if (!(0, _isNatural2['default'])(currentPage)) {
 	      throw new Error('\'currentPage\' must be a positive integer, not ' + currentPage);
 	      return;
 	    }
 
-	    if (!(0, _isNatural2['default'])(totalItemsCount)) {
-	      throw new Error('\'totalItemsCount\' must be a positive integer, not ' + totalItemsCount);
+	    if (!(0, _isNatural2['default'])(totalItems)) {
+	      throw new Error('\'totalItems\' must be a positive integer, not ' + totalItems);
 	      return;
 	    }
 
-	    var pagesCount = Math.ceil(totalItemsCount / itemsPerPage);
+	    var pagesCount = Math.ceil(totalItems / itemsPerPage);
 
 	    if (currentPage > pagesCount) {
 	      throw new Error('\'currentPage\' (' + currentPage + ') cannot be larger than pages count (' + pagesCount + ')');
@@ -111,12 +111,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (currentPage - smallerHalf <= 1) {
 	      minPage = 1;
 	    } else if (currentPage + largerHalf >= pagesCount) {
-	      minPage = Math.max(1, pagesCount - maxPagesInPagination + 1);
+	      minPage = Math.max(1, pagesCount - maxPages + 1);
 	    } else {
 	      minPage = currentPage - smallerHalf;
 	    }
 
-	    var maxPage = Math.min(pagesCount, minPage + maxPagesInPagination - 1);
+	    var maxPage = Math.min(pagesCount, minPage + maxPages - 1);
 
 	    var pages = [];
 
