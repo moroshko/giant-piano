@@ -34,13 +34,18 @@ describe('createPagination', () => {
           .to.throw(Error, /currentPage/);
       });
 
-      it('`totalItemsCount` is not a positive integer or 0', () => {
-        expect(paginate1.bind(null, { currentPage: 1 }))
+      it('`totalItemsCount` is not a positive integer', () => {
+        expect(paginate1.bind(null, { currentPage: 1, totalItemsCount: 0 }))
           .to.throw(Error, /totalItemsCount/);
+      });
+
+      it('`currentPage` is larger than `pagesCount`', () => {
+        expect(paginate5.bind(null, { currentPage: 3, totalItemsCount: 20 }))
+          .to.throw(Error, /currentPage/);
       });
     });
 
-    describe('should return `showFirst` equals', () => {
+    describe('should return `showFirst` equals to', () => {
       it('true if page 1 is not displayed', () => {
         expect(paginate1({ currentPage: 2, totalItemsCount: 62 }).showFirst)
           .to.equal(true);
@@ -56,20 +61,27 @@ describe('createPagination', () => {
       });
     });
 
-    describe('should return `showPrev` equals', () => {
-      it('true if current page is not 1', () => {
+    describe('should return `showPrev` equals to', () => {
+      it('true if `currentPage` is not 1', () => {
         expect(paginate1({ currentPage: 2, totalItemsCount: 62 }).showPrev)
           .to.equal(true);
       });
 
-      it('false if current page is 1', () => {
+      it('false if `currentPage` is 1', () => {
         expect(paginate1({ currentPage: 1, totalItemsCount: 62 }).showPrev)
           .to.equal(false);
       });
     });
 
     describe('should return `pages`', () => {
-      it('with current page centered (when possible)', () => {
+      it('that contain all the page numbers when `maxPagesInPagination` > `pagesCount`', () => {
+        expect(paginate5({ currentPage: 4, totalItemsCount: 31 }).pages)
+          .to.deep.equal([1, 2, 3, 4]);
+        expect(paginate6({ currentPage: 1, totalItemsCount: 1 }).pages)
+          .to.deep.equal([1]);
+      });
+
+      it('with `currentPage` centered (when possible)', () => {
         expect(paginate1({ currentPage: 2, totalItemsCount: 62 }).pages)
           .to.deep.equal([2]);
         expect(paginate5({ currentPage: 4, totalItemsCount: 62 }).pages)
@@ -78,26 +90,46 @@ describe('createPagination', () => {
           .to.deep.equal([2, 3, 4, 5, 6, 7]);
       });
 
-      it('with current page as centered as possible (when impossible to center)', () => {
+      it('with `currentPage` as centered as possible (when impossible to center)', () => {
         expect(paginate5({ currentPage: 6, totalItemsCount: 62 }).pages)
           .to.deep.equal([3, 4, 5, 6, 7]);
+        expect(paginate5({ currentPage: 7, totalItemsCount: 62 }).pages)
+          .to.deep.equal([3, 4, 5, 6, 7]);
+        expect(paginate6({ currentPage: 5, totalItemsCount: 62 }).pages)
+          .to.deep.equal([2, 3, 4, 5, 6, 7]);
         expect(paginate6({ currentPage: 7, totalItemsCount: 62 }).pages)
           .to.deep.equal([2, 3, 4, 5, 6, 7]);
       });
     });
 
-    describe('should return `showNext` =', () => {
-      it('true if current page is not the last page', () => {
+    describe('should return `showNext` equals to', () => {
+      it('true if `currentPage` is not the last page', () => {
         expect(paginate1({ currentPage: 6, totalItemsCount: 62 }).showNext)
           .to.equal(true);
         expect(paginate5({ currentPage: 4, totalItemsCount: 62 }).showNext)
           .to.equal(true);
       });
 
-      it('false if current page is the last page', () => {
+      it('false if `currentPage` is the last page', () => {
         expect(paginate1({ currentPage: 7, totalItemsCount: 62 }).showNext)
           .to.equal(false);
         expect(paginate5({ currentPage: 7, totalItemsCount: 62 }).showNext)
+          .to.equal(false);
+      });
+    });
+
+    describe('should return `showLast` equals to', () => {
+      it('true if the last page is not displayed', () => {
+        expect(paginate1({ currentPage: 6, totalItemsCount: 62 }).showLast)
+          .to.equal(true);
+        expect(paginate6({ currentPage: 3, totalItemsCount: 62 }).showLast)
+          .to.equal(true);
+      });
+
+      it('false if the last page is displayed', () => {
+        expect(paginate1({ currentPage: 7, totalItemsCount: 62 }).showLast)
+          .to.equal(false);
+        expect(paginate6({ currentPage: 4, totalItemsCount: 62 }).showLast)
           .to.equal(false);
       });
     });

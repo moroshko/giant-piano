@@ -1,7 +1,7 @@
 {
   "name": "giant-piano",
   "version": "0.1.0",
-  "description": "Pure Javascript function for pagination",
+  "description": "Minimal Javascript pagination utility",
   "main": "index.js",
   "repository": {
     "type": "git",
