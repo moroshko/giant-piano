@@ -1,0 +1,7 @@
+tests
+.babelrc
+.editorconfig
+.eslintrc
+.gitignore
+giant-piano.gif
+webpack.config.js
