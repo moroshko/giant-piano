@@ -20,7 +20,8 @@
     "build": "npm run lint && npm test && npm run dist",
     "copy-static-files": "cp demo/src/index.html demo/dist/",
     "demo": "mkdir -p demo/dist && npm run copy-static-files && node server",
-    "demo-dist": "rm -rf demo/dist && mkdir demo/dist && npm run copy-static-files && webpack --config webpack.gh-pages.config.js"
+    "demo-dist": "rm -rf demo/dist && mkdir demo/dist && npm run copy-static-files && webpack --config webpack.gh-pages.config.js",
+    "deploy": "./scripts/deploy-to-gh-pages.sh"
   },
   "keywords": [
     "pagination",
