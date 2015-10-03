@@ -10,7 +10,7 @@ export default class App extends Component {
     this.state = {
       itemsPerPage: 10,
       maxPages: 5,
-      currentPage: 1,
+      currentPage: 4,
       totalItems: 127
     };
 
@@ -58,7 +58,13 @@ export default class App extends Component {
 
     return (
       <div className={styles.container}>
-        <div>
+        <div className={styles.header}>
+          <img src="https://github.com/moroshko/giant-piano/raw/master/giant-piano.gif" />
+          <a href="https://github.com/moroshko/giant-piano" target="_blank">
+            <img src="https://img.shields.io/github/stars/moroshko/giant-piano.svg?style=social&label=Star" />
+          </a>
+        </div>
+        <div className={styles.fieldsContainer}>
           <div className={styles.field}>
             <label className={styles.label} htmlFor="items-per-page">
               Items per page:
@@ -126,6 +132,15 @@ export default class App extends Component {
               Last
             </button>
           }
+        </div>
+        <div className={styles.footer}>
+          <img src="https://gravatar.com/avatar/e56de06f4b56f6f06e4a9a271ed57e26?s=32"
+               alt="Misha Moroshko" />
+          <span>
+            Crafted with <span className={styles.love}>love</span> by
+            {' '}<a href="https://twitter.com/moroshko"
+                    target="_blank">@moroshko</a>
+          </span>
         </div>
       </div>
     );

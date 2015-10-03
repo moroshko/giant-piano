@@ -1,6 +1,23 @@
+@blue: #2c7ea7;
+@red: #ee0000;
+
 .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   font-family: "Helvetica Neue", Arial, sans-serif;
   font-size: 20px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 126px;
+}
+
+.fieldsContainer {
+  margin-top: 54px;
 }
 
 .field {
@@ -21,12 +38,12 @@
 }
 
 .pagination {
-  margin-top: 90px;
+  margin-top: 54px;
 }
 
 .button {
   display: inline-block;
-  margin-left: -1px;
+  margin: 0 0 0 -1px;
   padding: 7px 15px;
   background-color: white;
   border: 1px solid black;
@@ -48,11 +65,35 @@
 }
 
 .currentPage {
-  background-color: #06c;
+  background-color: @blue;
   color: white;
   cursor: default;
 }
 
 .hidden {
   visibility: hidden;
+}
+
+.footer {
+  display: flex;
+  flex-shrink: 0;
+  margin-top: 90px;
+  margin-bottom: 36px;
+  height: 32px;
+  line-height: 32px;
+
+  img {
+    margin-right: 5px;
+    border-radius: 4px;
+  }
+
+  .love {
+    color: @red;
+    font-weight: bold;
+  }
+
+  a {
+    text-decoration: none;
+    color: @blue;
+  }
 }
