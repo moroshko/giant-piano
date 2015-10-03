@@ -9,3 +9,4 @@ giant-piano.gif
 server.js
 webpack.dist.config.js
 webpack.demo.config.js
+webpack.gh-pages.config.js

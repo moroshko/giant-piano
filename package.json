@@ -13,13 +13,14 @@
   },
   "homepage": "https://github.com/moroshko/giant-piano",
   "scripts": {
-    "lint": "eslint src tests demo",
+    "lint": "eslint src tests demo/src server.js webpack.*",
     "test": "mocha tests --compilers js:babel/register",
     "test-dev": "mocha tests --compilers js:babel/register --watch --reporter min",
     "dist": "rm -rf dist && mkdir dist && webpack --config webpack.dist.config.js",
     "build": "npm run lint && npm test && npm run dist",
     "copy-static-files": "cp demo/src/index.html demo/dist/",
-    "demo": "mkdir -p demo/dist && npm run copy-static-files && node server"
+    "demo": "mkdir -p demo/dist && npm run copy-static-files && node server",
+    "demo-dist": "rm -rf demo/dist && mkdir demo/dist && npm run copy-static-files && webpack --config webpack.gh-pages.config.js"
   },
   "keywords": [
     "pagination",

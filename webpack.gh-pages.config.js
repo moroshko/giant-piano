@@ -1,16 +1,12 @@
 var path = require('path');
+var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-  entry: [
-    'webpack-dev-server/client?http://localhost:1704',
-    './demo/src/index'
-  ],
+  entry: './demo/src/index',
 
   output: {
-    path: path.join(__dirname, 'dist'), // Must be an absolute path
-    filename: 'index.js',
-    publicPath: '/demo/dist'
+    filename: './demo/dist/index.js'
   },
 
   module: {
@@ -32,6 +28,19 @@ module.exports = {
   },
 
   plugins: [
-    new ExtractTextPlugin('app.css')
+    new ExtractTextPlugin('./demo/dist/app.css'),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      output: {
+        comments: false
+      },
+      compress: {
+        warnings: false
+      }
+    })
   ]
 };
