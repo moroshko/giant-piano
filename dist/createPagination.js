@@ -99,10 +99,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return;
 	    }
 
-	    var pagesCount = Math.ceil(totalItems / itemsPerPage);
+	    var lastPage = Math.ceil(totalItems / itemsPerPage);
 
-	    if (currentPage > pagesCount) {
-	      throw new Error('\'currentPage\' (' + currentPage + ') cannot be larger than pages count (' + pagesCount + ')');
+	    if (currentPage > lastPage) {
+	      throw new Error('\'currentPage\' (' + currentPage + ') cannot be larger than \'lastPage\' (' + lastPage + ')');
 	      return;
 	    }
 
@@ -110,13 +110,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    if (currentPage - smallerHalf <= 1) {
 	      minPage = 1;
-	    } else if (currentPage + largerHalf >= pagesCount) {
-	      minPage = Math.max(1, pagesCount - maxPages + 1);
+	    } else if (currentPage + largerHalf >= lastPage) {
+	      minPage = Math.max(1, lastPage - maxPages + 1);
 	    } else {
 	      minPage = currentPage - smallerHalf;
 	    }
 
-	    var maxPage = Math.min(pagesCount, minPage + maxPages - 1);
+	    var maxPage = Math.min(lastPage, minPage + maxPages - 1);
 
 	    var pages = [];
 
@@ -126,9 +126,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    var showFirst = pages[0] > 1;
 	    var showPrev = currentPage > 1;
-	    var showNext = currentPage < pagesCount;
-	    var showLast = pages[pages.length - 1] < pagesCount;
-	    var lastPage = pagesCount;
+	    var showNext = currentPage < lastPage;
+	    var showLast = pages[pages.length - 1] < lastPage;
 
 	    return {
 	      showFirst: showFirst,

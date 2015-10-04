@@ -26,10 +26,10 @@ export default function createPagination({ itemsPerPage, maxPages }) {
       return;
     }
 
-    const pagesCount = Math.ceil(totalItems / itemsPerPage);
+    const lastPage = Math.ceil(totalItems / itemsPerPage);
 
-    if (currentPage > pagesCount) {
-      throw new Error(`'currentPage' (${currentPage}) cannot be larger than pages count (${pagesCount})`);
+    if (currentPage > lastPage) {
+      throw new Error(`'currentPage' (${currentPage}) cannot be larger than 'lastPage' (${lastPage})`);
       return;
     }
 
@@ -37,13 +37,13 @@ export default function createPagination({ itemsPerPage, maxPages }) {
 
     if (currentPage - smallerHalf <= 1) {
       minPage = 1;
-    } else if (currentPage + largerHalf >= pagesCount) {
-      minPage = Math.max(1, pagesCount - maxPages + 1);
+    } else if (currentPage + largerHalf >= lastPage) {
+      minPage = Math.max(1, lastPage - maxPages + 1);
     } else {
       minPage = currentPage - smallerHalf;
     }
 
-    const maxPage = Math.min(pagesCount, minPage + maxPages - 1);
+    const maxPage = Math.min(lastPage, minPage + maxPages - 1);
 
     let pages = [];
 
@@ -53,9 +53,8 @@ export default function createPagination({ itemsPerPage, maxPages }) {
 
     const showFirst = (pages[0] > 1);
     const showPrev = (currentPage > 1);
-    const showNext = (currentPage < pagesCount);
-    const showLast = (pages[pages.length - 1] < pagesCount);
-    const lastPage = pagesCount;
+    const showNext = (currentPage < lastPage);
+    const showLast = (pages[pages.length - 1] < lastPage);
 
     return {
       showFirst,
