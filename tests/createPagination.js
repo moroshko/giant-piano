@@ -39,7 +39,7 @@ describe('createPagination', () => {
           .to.throw(Error, /totalItems/);
       });
 
-      it('`currentPage` is larger than `pagesCount`', () => {
+      it('`currentPage` is larger than `lastPage`', () => {
         expect(paginate5.bind(null, { currentPage: 3, totalItems: 20 }))
           .to.throw(Error, /currentPage/);
       });
@@ -74,7 +74,7 @@ describe('createPagination', () => {
     });
 
     describe('should return `pages`', () => {
-      it('that contain all the page numbers when `maxPages` > `pagesCount`', () => {
+      it('that contain all the page numbers when `maxPages` > `lastPage`', () => {
         expect(paginate5({ currentPage: 4, totalItems: 31 }).pages)
           .to.deep.equal([1, 2, 3, 4]);
         expect(paginate6({ currentPage: 1, totalItems: 1 }).pages)

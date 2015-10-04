@@ -7,11 +7,19 @@ export default class App extends Component {
   constructor() {
     super();
 
+    const itemsPerPage = 10;
+    const maxPages = 5;
+    const currentPage = 4;
+    const totalItems = 127;
+    const paginationData =
+      createPagination({ itemsPerPage, maxPages })({ currentPage, totalItems });
+
     this.state = {
-      itemsPerPage: 10,
-      maxPages: 5,
-      currentPage: 4,
-      totalItems: 127
+      itemsPerPage,
+      maxPages,
+      currentPage,
+      totalItems,
+      ...paginationData
     };
 
     this.updateItemsPerPage = ::this.updateItemsPerPage;
@@ -21,40 +29,61 @@ export default class App extends Component {
     this.setCurrentPage = ::this.setCurrentPage;
   }
 
+  updateState(newState) {
+    const nextState = {
+      ...this.state,
+      ...newState
+    };
+    const { itemsPerPage, maxPages, currentPage, totalItems } = nextState;
+
+    try {
+      const newPaginationData =
+        createPagination({ itemsPerPage, maxPages })({ currentPage, totalItems });
+
+      this.setState({
+        ...nextState,
+        ...newPaginationData
+      });
+    } catch (error) {
+      console.info(error); // eslint-disable-line no-console
+    }
+  }
+
   updateItemsPerPage(event) {
-    this.setState({
+    this.updateState({
       itemsPerPage: parseInt(event.target.value, 10)
     });
   }
 
   updateMaxPages(event) {
-    this.setState({
+    this.updateState({
       maxPages: parseInt(event.target.value, 10)
     });
   }
 
   updateCurrentPage(event) {
-    this.setState({
+    this.updateState({
       currentPage: parseInt(event.target.value, 10)
     });
   }
 
   updateTotalItems(event) {
-    this.setState({
+    this.updateState({
       totalItems: parseInt(event.target.value, 10)
     });
   }
 
   setCurrentPage(page) {
-    this.setState({
+    this.updateState({
       currentPage: page
     });
   }
 
   render() {
-    const { itemsPerPage, maxPages, currentPage, totalItems } = this.state;
-    const { showFirst, showPrev, pages, showNext, showLast, lastPage } =
-      createPagination({ itemsPerPage, maxPages })({ currentPage, totalItems });
+    const { itemsPerPage, maxPages, currentPage, totalItems,
+            showFirst, showPrev, pages, showNext, showLast, lastPage } = this.state;
+    const maxItemsPerPage = Math.floor((totalItems - 1) / (currentPage - 1));
+    const minTotalItems = itemsPerPage * (currentPage - 1) + 1;
 
     return (
       <div className={styles.container}>
@@ -70,7 +99,7 @@ export default class App extends Component {
               Items per page:
             </label>
             <input id="items-per-page" className={styles.input}
-                   type="number" min="1"
+                   type="number" min="1" max={maxItemsPerPage}
                    value={itemsPerPage} onChange={this.updateItemsPerPage} />
           </div>
           <div className={styles.field}>
@@ -86,7 +115,7 @@ export default class App extends Component {
               Current page:
             </label>
             <input id="current-page" className={styles.input}
-                   type="number" min="1"
+                   type="number" min="1" max={lastPage}
                    value={currentPage} onChange={this.updateCurrentPage} />
           </div>
           <div className={styles.field}>
@@ -94,7 +123,7 @@ export default class App extends Component {
               Total items:
             </label>
             <input id="total-items" className={styles.input}
-                   type="number" min="1"
+                   type="number" min={minTotalItems}
                    value={totalItems} onChange={this.updateTotalItems} />
           </div>
         </div>
