@@ -71,7 +71,7 @@ console.log(paginate({ currentPage: 1, totalItems: 1234 }));
 ## Run demo locally
 
 ```shell
-npm run demo
+npm start
 ```
 
 ## License
