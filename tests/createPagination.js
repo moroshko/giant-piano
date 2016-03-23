@@ -38,11 +38,6 @@ describe('createPagination', () => {
         expect(paginate1.bind(null, { currentPage: 1, totalItems: 0 }))
           .to.throw(Error, /totalItems/);
       });
-
-      it('`currentPage` is larger than `lastPage`', () => {
-        expect(paginate5.bind(null, { currentPage: 3, totalItems: 20 }))
-          .to.throw(Error, /currentPage/);
-      });
     });
 
     describe('should return `showFirst` equals to', () => {
@@ -59,6 +54,11 @@ describe('createPagination', () => {
         expect(paginate5({ currentPage: 3, totalItems: 62 }).showFirst)
           .to.equal(false);
       });
+
+      it('false if `currentPage` is larger than `lastPage`', () => {
+        expect(paginate5({ currentPage: 8, totalItems: 62 }).showFirst)
+          .to.equal(false);
+      });
     });
 
     describe('should return `showPrev` equals to', () => {
@@ -69,6 +69,11 @@ describe('createPagination', () => {
 
       it('false if `currentPage` is 1', () => {
         expect(paginate1({ currentPage: 1, totalItems: 62 }).showPrev)
+          .to.equal(false);
+      });
+
+      it('false if `currentPage` is larger than `lastPage`', () => {
+        expect(paginate5({ currentPage: 8, totalItems: 62 }).showPrev)
           .to.equal(false);
       });
     });
@@ -100,6 +105,11 @@ describe('createPagination', () => {
         expect(paginate6({ currentPage: 7, totalItems: 62 }).pages)
           .to.deep.equal([2, 3, 4, 5, 6, 7]);
       });
+
+      it('equals to an empty array when `currentPage` is larger than `lastPage`', () => {
+        expect(paginate5({ currentPage: 8, totalItems: 62 }).pages)
+          .to.deep.equal([]);
+      });
     });
 
     describe('should return `showNext` equals to', () => {
@@ -114,6 +124,11 @@ describe('createPagination', () => {
         expect(paginate1({ currentPage: 7, totalItems: 62 }).showNext)
           .to.equal(false);
         expect(paginate5({ currentPage: 7, totalItems: 62 }).showNext)
+          .to.equal(false);
+      });
+
+      it('false if `currentPage` is larger than `lastPage`', () => {
+        expect(paginate5({ currentPage: 8, totalItems: 62 }).showNext)
           .to.equal(false);
       });
     });
@@ -132,10 +147,17 @@ describe('createPagination', () => {
         expect(paginate6({ currentPage: 4, totalItems: 62 }).showLast)
           .to.equal(false);
       });
+
+      it('false if `currentPage` is larger than `lastPage`', () => {
+        expect(paginate5({ currentPage: 8, totalItems: 62 }).showLast)
+          .to.equal(false);
+      });
     });
 
     it('should return `lastPage` equals to total number of pages', () => {
       expect(paginate5({ currentPage: 3, totalItems: 62 }).lastPage)
+        .to.equal(7);
+      expect(paginate5({ currentPage: 8, totalItems: 62 }).lastPage)
         .to.equal(7);
     });
   });

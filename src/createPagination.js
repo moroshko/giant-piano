@@ -29,8 +29,14 @@ export default function createPagination({ itemsPerPage, maxPages }) {
     const lastPage = Math.ceil(totalItems / itemsPerPage);
 
     if (currentPage > lastPage) {
-      throw new Error(`'currentPage' (${currentPage}) cannot be larger than 'lastPage' (${lastPage})`);
-      return;
+      return {
+        showFirst: false,
+        showPrev: false,
+        pages: [],
+        showNext: false,
+        showLast: false,
+        lastPage
+      };
     }
 
     let minPage;
